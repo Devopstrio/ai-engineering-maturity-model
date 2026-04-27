@@ -22,6 +22,8 @@
 
 ## 🏛️ Executive Summary
 
+![AI Engineering Maturity Model Architecture](assets/architecture.png)
+
 The **AI Engineering Maturity Model (AI-EMM)** is a comprehensive assessment and transformation platform designed to help organizations move from "Fragile AI Experiments" to "Industrial-Grade AI Platforms." It provides a data-driven methodology to evaluate engineering rigor, security posture, and business value realization.
 
 ### The Objective
