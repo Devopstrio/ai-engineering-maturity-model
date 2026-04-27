@@ -1,0 +1,36 @@
+name: AI-EMM Production Release
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Build Scanner Image
+        run: |
+          docker build -t acrdtrio.azurecr.io/ai-maturity-api:${{ github.sha }} -f Dockerfile.api .
+
+      - name: Push to ACR
+        run: |
+          az acr login --name acrdtrio
+          docker push acrdtrio.azurecr.io/ai-maturity-api:${{ github.sha }}
+
+  terraform-apply:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Terraform Init
+        run: terraform -chdir=terraform/environments/prod init
+      
+      - name: Terraform Apply
+        run: terraform -chdir=terraform/environments/prod apply -auto-approve
