@@ -1,0 +1,12 @@
+apiVersion: v2
+name: ai-emm-platform
+description: Enterprise Helm Chart for AI Engineering Maturity Model
+type: application
+version: 1.0.0
+appVersion: "1.0.0"
+
+dependencies:
+  - name: redis
+    version: "17.0.0"
+    repository: "https://charts.bitnami.com/bitnami"
+    condition: redis.enabled
